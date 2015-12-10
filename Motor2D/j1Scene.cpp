@@ -200,7 +200,7 @@ bool j1Scene::Update(float dt){
 				focuser = App->gui->elements.start;
 		}
 	}
-	//-------------------------------------
+	//---------------------------
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
