@@ -1,8 +1,12 @@
-﻿Build started 09/12/2015 22:45:14.
+﻿Build started 10/12/2015 1:16:25.
      1>Project "C:\Users\Roger\Desktop\GUI\Motor2D\Motor2D.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\VisualStudio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _ITERATOR_DEBUG_LEVEL=0 /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt j1Gui.cpp
-         j1Gui.cpp
+         D:\VisualStudio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _ITERATOR_DEBUG_LEVEL=0 /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt j1Scene.cpp
+         j1Scene.cpp
+     1>c:\users\roger\desktop\gui\motor2d\j1scene.cpp(162): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\roger\desktop\gui\motor2d\j1scene.cpp(165): warning C4244: '-=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\roger\desktop\gui\motor2d\j1scene.cpp(168): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\roger\desktop\gui\motor2d\j1scene.cpp(171): warning C4244: '-=' : conversion from 'float' to 'int', possible loss of data
        Link:
          D:\VisualStudio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Roger\Desktop\GUI\Debug\Development - Class 11.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Roger\Desktop\GUI\Debug\Development - Class 11.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Roger\Desktop\GUI\Debug\Development - Class 11.lib" /MACHINE:X86 Debug\j1FileSystem.obj
          Debug\j1Fonts.obj
@@ -26,4 +30,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.08
+Time Elapsed 00:00:01.01

@@ -110,12 +110,12 @@ Button* j1Gui::CreateButton(SDL_Texture* tex, SDL_Rect* rect, Label* label, bool
 	return button;
 }
 
-Window* j1Gui::CreateWindows(SDL_Texture* tex, SDL_Rect* rect, /*Label* label,*/ Button* button, bool listener){
-	Window* window = new Window(tex, rect, button, windows, listener);
+Window* j1Gui::CreateWindows(SDL_Texture* tex, SDL_Rect* rect, Label* label, Button* button, bool listener){
+	Window* window = new Window(tex, rect, label, button, windows, listener);
 	elements.add(window);
 	elements.add(button);
 	elements.add(button->GetLabel());
-	//elements.add(label);
+	elements.add(label);
 	return window;
 }
 
@@ -191,6 +191,13 @@ void Label::Draw(){
 void Label::ChangeColor(SDL_Color color){
 	this->color = color;
 }
+
+void Label::Drag(){
+	p2Point<int> mouseMotion;
+	App->input->GetMouseMotion(mouseMotion.x, mouseMotion.y);
+	box->x = box->x + mouseMotion.x;
+	box->y = box->y + mouseMotion.y;
+}
 //-------------------------------------
 
 //Cursor
@@ -253,10 +260,10 @@ void Button::Interact(MouseEvents events){
 //-------------------------------------------------
 
 //Window
-Window::Window(SDL_Texture* texture, SDL_Rect* rect, Button* button, ElementType type, bool listener){
+Window::Window(SDL_Texture* texture, SDL_Rect* rect, Label* label, Button* button, ElementType type, bool listener){
 	this->texture = texture;
 	this->box = rect;
-	//this->labels.add(label);
+	this->labels.add(label);
 	this->buttons.add(button);
 	this->type = type;
 	this->listener = listener;
@@ -272,6 +279,9 @@ void Window::Drag(){
 	box->x = box->x + mouseMotion.x;
 	box->y = box->y + mouseMotion.y;
 	for (p2List_item<Button*>* tmp = this->buttons.start; tmp; tmp = tmp->next){
+		tmp->data->Drag();
+	}
+	for (p2List_item<Label*>* tmp = this->labels.start; tmp; tmp = tmp->next){
 		tmp->data->Drag();
 	}
 }

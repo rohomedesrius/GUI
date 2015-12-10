@@ -62,6 +62,7 @@ private:
 	//Windows
 	SDL_Rect WD1;
 	SDL_Texture* windowTex;
+	Label* windowLabel;
 
 	bool debug;
 	int dbg,v;

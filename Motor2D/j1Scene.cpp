@@ -63,8 +63,8 @@ bool j1Scene::Start()
 	App->gui->CreateImage(logo, &LG);
 
 	//Labels
-	LB1 = { 163, 221, 90, 15 };
-	App->gui->CreateLabel("Account Name", &LB1, 16, BLACK, false);
+	LB1 = { 163, 258, 90, 15 };
+	windowLabel = App->gui->CreateLabel("Account Name", &LB1, 16, YELLOW, true);
 
 	LB2 = { 163, 450, 40, 15 };
 	button1Label = App->gui->CreateLabel("Login", &LB2, 16, YELLOW, true);
@@ -79,7 +79,7 @@ bool j1Scene::Start()
 	//Windows
 	WD1 = {110, 249, 195, 270};
 	windowTex = App->tex->Load("gui/WindowWoW.png");
-	App->gui->CreateWindows(windowTex, &WD1, windowButton, true);
+	App->gui->CreateWindows(windowTex, &WD1, windowLabel, windowButton, true);
 	return true;
 }
 
@@ -259,7 +259,10 @@ bool j1Scene::CleanUp()
 	App->tex->UnLoad(button1);
 	App->tex->UnLoad(button1light);
 	App->tex->UnLoad(button1down);
+	App->tex->UnLoad(windowTex);
+	delete windowButton;
 	delete button1Label;
+	delete windowLabel;
 
 	return true;
 }
