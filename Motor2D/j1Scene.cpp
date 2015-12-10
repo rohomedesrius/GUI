@@ -80,6 +80,14 @@ bool j1Scene::Start()
 	WD1 = {110, 249, 195, 270};
 	windowTex = App->tex->Load("gui/WindowWoW.png");
 	App->gui->CreateWindows(windowTex, &WD1, windowLabel, windowButton, true);
+
+	//Input Boxx
+	IB1 = { 145, 330, 128, 23 };
+	inputLabelBox = { 150, 335, 120, 15 };
+	inputLabel = App->gui->CreateLabel("Your Name", &inputLabelBox, 14, YELLOW, true);
+	inBoxTex = App->tex->Load("gui/InputBoxWoW.png");
+	App->gui->CreateInputBox(inBoxTex, &IB1, inputLabel, true);
+	
 	return true;
 }
 

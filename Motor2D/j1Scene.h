@@ -64,6 +64,13 @@ private:
 	SDL_Texture* windowTex;
 	Label* windowLabel;
 
+	//InputBox
+	SDL_Rect IB1;
+	SDL_Texture* inBoxTex;
+	Label* inputLabel;
+	SDL_Rect inputLabelBox;
+
+	//Vars
 	bool debug;
 	int dbg,v;
 	p2List_item<UI_Element*>* focuser;

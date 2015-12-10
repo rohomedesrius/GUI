@@ -119,6 +119,13 @@ Window* j1Gui::CreateWindows(SDL_Texture* tex, SDL_Rect* rect, Label* label, But
 	return window;
 }
 
+InputBox* j1Gui::CreateInputBox(SDL_Texture* tex, SDL_Rect* rect, Label* label, bool listener){
+	InputBox* inputBox = new InputBox(tex, rect, label, inputbox, listener);
+	elements.add(inputBox);
+	elements.add(label);
+	return inputBox;
+}
+
 bool j1Gui::checkMousePosition(p2Point<int> mousePosition, UI_Element* tmp){
 
 	return ((mousePosition.x > tmp->box->x) && (mousePosition.x < tmp->box->x + tmp->box->w) && (mousePosition.y > tmp->box->y) && (mousePosition.y < tmp->box->y + tmp->box->h));
@@ -289,3 +296,20 @@ void Window::Drag(){
 void Window::Interact(MouseEvents events){}
 //-------------------------------------------------
 
+//Input Boxx
+InputBox::InputBox(SDL_Texture* texture, SDL_Rect* rect, Label* label, ElementType type, bool listener){
+	this->texture = texture;
+	this->box = rect;
+	input = new Label(label);
+	this->type = type;
+	this->listener = listener;
+}
+
+void InputBox::Draw(){
+	App->render->Blit(texture, box->x, box->y, false);
+}
+
+void InputBox::Drag(){}
+
+void InputBox::Interact(MouseEvents events){}
+//-------------------------------------------------

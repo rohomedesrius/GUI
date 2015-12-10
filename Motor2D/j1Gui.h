@@ -20,7 +20,8 @@ enum ElementType{
 	images,
 	buttons,
 	cursor,
-	windows
+	windows,
+	inputbox
 };
 
 class UI_Element{
@@ -42,12 +43,16 @@ public:
 	void Debug(bool focus);
 };
 
+//-----------------------------------------------------------------------
+
 class Image : public UI_Element{
 public:
 
 	Image(SDL_Texture* texture, SDL_Rect* box, ElementType type);
 	void Draw();
 };
+
+//-----------------------------------------------------------------------
 
 class Label: public UI_Element{
 	p2SString text;
@@ -66,6 +71,8 @@ public:
 	void Drag();
 };
 
+//-----------------------------------------------------------------------
+
 class Cursor : public UI_Element{
 public:
 	Cursor(SDL_Texture* texture);
@@ -73,6 +80,8 @@ public:
 	void updatePosition();
 	void Draw();
 };
+
+//-----------------------------------------------------------------------
 
 class Button : public UI_Element{
 	Label* name;
@@ -85,10 +94,23 @@ public:
 	Label* GetLabel(){return name;}
 };
 
+//-----------------------------------------------------------------------
+
+class InputBox : public UI_Element{
+	Label* input;
+public:
+	InputBox(SDL_Texture* texture, SDL_Rect* rect, Label* label, ElementType type, bool listener);
+	void Draw();
+	void Drag();
+	void Interact(MouseEvents events);
+};
+
+//-----------------------------------------------------------------------
+
 class Window : public UI_Element{
-	p2List<Button*>  buttons;
-	p2List<Label*>   labels;
-	//InputBoxes
+	p2List<Button*>     buttons;
+	p2List<Label*>      labels;
+	p2List<InputBox*>   inputBoxes;
 public:
 	Window(SDL_Texture* texture, SDL_Rect* rect, Label* label, Button* button, ElementType type, bool listener);
 	void Draw();
@@ -96,7 +118,8 @@ public:
 	void Interact(MouseEvents events);
 };
 
-// ---------------------------------------------------
+//-----------------------------------------------------------------------
+//CLASS GUI
 class j1Gui : public j1Module
 {
 public:
@@ -126,6 +149,7 @@ public:
 	Label* CreateLabel(p2SString text, SDL_Rect* rect, int size, SDL_Color color, bool isButton);
 	Button* CreateButton(SDL_Texture* tex, SDL_Rect* rect,Label* name, bool listener, bool isWindow);
 	Window* CreateWindows(SDL_Texture* tex, SDL_Rect* rect, Label* label, Button* button, bool listener);
+	InputBox* CreateInputBox(SDL_Texture* texture, SDL_Rect* rect, Label* label, bool listener);
 
 	bool checkMousePosition(p2Point<int> mousePosition, UI_Element* tmp);
 
