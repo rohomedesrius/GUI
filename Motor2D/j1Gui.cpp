@@ -105,6 +105,7 @@ Button* j1Gui::CreateButton(SDL_Texture* tex, SDL_Rect* rect, Label* label, bool
 	Button* button = new Button(tex, rect, label, buttons, listener, isWindow);
 	if (!isWindow){
 		elements.add(button);
+		inputs.add(button);
 		elements.add(label);
 	}
 	return button;
@@ -114,9 +115,11 @@ Window* j1Gui::CreateWindows(SDL_Texture* tex, SDL_Rect* rect, Label* label, But
 	Window* window = new Window(tex, rect, label, button, input, windows, listener);
 	elements.add(window);
 	elements.add(button);
+	inputs.add(button);
 	elements.add(button->GetLabel());
 	elements.add(label);
 	elements.add(input);
+	inputs.add(input);
 	elements.add(input->GetLabel());
 	return window;
 }
@@ -315,6 +318,8 @@ InputBox::InputBox(SDL_Texture* texture, SDL_Rect* rect, Label* label, ElementTy
 
 void InputBox::Draw(){
 	App->render->Blit(texture, box->x, box->y, false);
+	if (focused)
+		App->render->DrawQuad({ cursor_coords.x, cursor_coords.y, 2, 15 }, 255, 255, 255, 255, true, false);
 }
 
 void InputBox::Drag(){
@@ -324,11 +329,19 @@ void InputBox::Drag(){
 	box->y = box->y + mouseMotion.y;
 	input->box->x = box->x + (box->w / 2) - (input->box->w / 2);
 	input->box->y = box->y + 5;
+	cursor_coords.x = input->box->x;
+	cursor_coords.y = input->box->y;
+}
+
+void InputBox::StartInputText(){
 }
 
 void InputBox::Interact(MouseEvents events){
 	if (events == MouseLeftClick){
 		input->GetString().Clear();
+		StartInputText();
 	}
 }
 //-------------------------------------------------
+
+//App->font->CalcSize(selected.GetString(), cursor_coords.x, cursor_coords.y);

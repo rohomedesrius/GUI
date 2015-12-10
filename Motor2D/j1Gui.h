@@ -100,10 +100,13 @@ public:
 class InputBox : public UI_Element{
 	Label* input;
 public:
+	p2Point<int> cursor_coords;
 	InputBox(SDL_Texture* texture, SDL_Rect* rect, Label* label, ElementType type, bool listener);
 	void Draw();
 	void Drag();
 	void Interact(MouseEvents events);
+	void StartInputText();
+	void EndInputText();
 	Label* GetLabel(){ return input; }
 };
 
@@ -169,6 +172,7 @@ private:
 public:
 
 	p2List<UI_Element*> elements;
+	p2List<UI_Element*> inputs;
 
 	//Cursor
 	Cursor* mouse;

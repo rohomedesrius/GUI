@@ -82,6 +82,8 @@ bool j1Scene::Start()
 	inputLabel = App->gui->CreateLabel("Your Name", &inputLabelBox, 14, YELLOW, true);
 	inBoxTex = App->tex->Load("gui/InputBoxWoW.png");
 	inputBox1 = App->gui->CreateInputBox(inBoxTex, &IB1, inputLabel, true, true);
+	inputBox1->cursor_coords.x = 150;
+	inputBox1->cursor_coords.y = 335;
 
 	//Windows
 	WD1 = {110, 249, 195, 270};
@@ -129,7 +131,8 @@ bool j1Scene::Update(float dt){
 	// Gui ---
 
 	if (v == 0){
-		focuser = App->gui->elements.start;
+		focuser = App->gui->inputs.start;
+		focuser->data->focused = true;
 		v = 1;
 	}
 
@@ -146,7 +149,6 @@ bool j1Scene::Update(float dt){
 		if ((App->gui->checkMousePosition(mousePosition, tmp->data)) && (tmp->data->listener == true)){
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT)){
 				App->gui->guiEvents(tmp->data, MouseLeftClick);
-				tmp->data->focused = true;
 			}
 			else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT)){
 				App->gui->guiEvents(tmp->data, MouseRightClick);
@@ -179,6 +181,18 @@ bool j1Scene::Update(float dt){
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= floor(200.0f * dt);
 
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN){
+		if (focuser->next == NULL){
+			focuser = App->gui->inputs.start;
+			focuser->next->data->focused = false;
+		}
+		else{
+			focuser = focuser->next;
+			focuser->data->focused = true;
+			focuser->prev->data->focused = false;
+		}
+	}
+
 	//DEBUG--------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN){
 		if (dbg == 0){
@@ -191,22 +205,16 @@ bool j1Scene::Update(float dt){
 		}
 	}
 	if (debug){
-		p2List_item<UI_Element*>* tmp;
 		focuser->data->focused = true;
-		for (tmp = App->gui->elements.start; tmp; tmp = tmp->next){
+		for (p2List_item<UI_Element*>* tmp = App->gui->elements.start; tmp; tmp = tmp->next){
+				tmp->data->Debug(false);
+		}
+		for (p2List_item<UI_Element*>* tmp = App->gui->inputs.start; tmp; tmp = tmp->next){
 			if (tmp->data->focused){
 				tmp->data->Debug(true);
 			}
-			else{
+			else
 				tmp->data->Debug(false);
-			}
-		}
-		//TABULADOR
-		if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN){
-			focuser = focuser->next;
-			focuser->prev->data->focused = false;
-			if (focuser->next == NULL)
-				focuser = App->gui->elements.start;
 		}
 	}
 	//---------------------------

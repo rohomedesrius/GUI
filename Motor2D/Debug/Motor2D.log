@@ -1,4 +1,4 @@
-﻿Build started 10/12/2015 2:53:46.
+﻿Build started 10/12/2015 15:32:36.
      1>Project "C:\Users\Roger\Desktop\GUI\Motor2D\Motor2D.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          D:\VisualStudio\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _ITERATOR_DEBUG_LEVEL=0 /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt j1Gui.cpp
@@ -26,4 +26,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.08
+Time Elapsed 00:00:01.10
