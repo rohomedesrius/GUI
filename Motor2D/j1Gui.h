@@ -69,6 +69,7 @@ public:
 	void ChangeColor(SDL_Color color);
 	void Draw();
 	void Drag();
+	p2SString& GetString(){ return text; }
 };
 
 //-----------------------------------------------------------------------
@@ -103,6 +104,7 @@ public:
 	void Draw();
 	void Drag();
 	void Interact(MouseEvents events);
+	Label* GetLabel(){ return input; }
 };
 
 //-----------------------------------------------------------------------
@@ -112,7 +114,7 @@ class Window : public UI_Element{
 	p2List<Label*>      labels;
 	p2List<InputBox*>   inputBoxes;
 public:
-	Window(SDL_Texture* texture, SDL_Rect* rect, Label* label, Button* button, ElementType type, bool listener);
+	Window(SDL_Texture* texture, SDL_Rect* rect, Label* label, Button* button, InputBox* input, ElementType type, bool listener);
 	void Draw();
 	void Drag();
 	void Interact(MouseEvents events);
@@ -148,8 +150,8 @@ public:
 	Image* CreateImage(SDL_Texture* tex, SDL_Rect* rect);
 	Label* CreateLabel(p2SString text, SDL_Rect* rect, int size, SDL_Color color, bool isButton);
 	Button* CreateButton(SDL_Texture* tex, SDL_Rect* rect,Label* name, bool listener, bool isWindow);
-	Window* CreateWindows(SDL_Texture* tex, SDL_Rect* rect, Label* label, Button* button, bool listener);
-	InputBox* CreateInputBox(SDL_Texture* texture, SDL_Rect* rect, Label* label, bool listener);
+	Window* CreateWindows(SDL_Texture* tex, SDL_Rect* rect, Label* label, Button* button, InputBox* input, bool listener);
+	InputBox* CreateInputBox(SDL_Texture* texture, SDL_Rect* rect, Label* label, bool listener, bool isWindow);
 
 	bool checkMousePosition(p2Point<int> mousePosition, UI_Element* tmp);
 

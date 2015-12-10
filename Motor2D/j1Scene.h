@@ -8,6 +8,7 @@ class GuiImage;
 class GuiText;
 class Label;
 class Button;
+class InputBox;
 
 class j1Scene : public j1Module
 {
@@ -67,6 +68,7 @@ private:
 	//InputBox
 	SDL_Rect IB1;
 	SDL_Texture* inBoxTex;
+	InputBox* inputBox1;
 	Label* inputLabel;
 	SDL_Rect inputLabelBox;
 

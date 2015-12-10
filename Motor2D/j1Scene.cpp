@@ -76,18 +76,18 @@ bool j1Scene::Start()
 	button1down = App->tex->Load("gui/ButtonDown.png");
 	windowButton = App->gui->CreateButton(button1, &BT1, button1Label, true, true);
 
-	//Windows
-	WD1 = {110, 249, 195, 270};
-	windowTex = App->tex->Load("gui/WindowWoW.png");
-	App->gui->CreateWindows(windowTex, &WD1, windowLabel, windowButton, true);
-
 	//Input Boxx
 	IB1 = { 145, 330, 128, 23 };
 	inputLabelBox = { 150, 335, 120, 15 };
 	inputLabel = App->gui->CreateLabel("Your Name", &inputLabelBox, 14, YELLOW, true);
 	inBoxTex = App->tex->Load("gui/InputBoxWoW.png");
-	App->gui->CreateInputBox(inBoxTex, &IB1, inputLabel, true);
-	
+	inputBox1 = App->gui->CreateInputBox(inBoxTex, &IB1, inputLabel, true, true);
+
+	//Windows
+	WD1 = {110, 249, 195, 270};
+	windowTex = App->tex->Load("gui/WindowWoW.png");
+	App->gui->CreateWindows(windowTex, &WD1, windowLabel, windowButton, inputBox1, true);
+
 	return true;
 }
 
@@ -146,6 +146,7 @@ bool j1Scene::Update(float dt){
 		if ((App->gui->checkMousePosition(mousePosition, tmp->data)) && (tmp->data->listener == true)){
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT)){
 				App->gui->guiEvents(tmp->data, MouseLeftClick);
+				tmp->data->focused = true;
 			}
 			else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT)){
 				App->gui->guiEvents(tmp->data, MouseRightClick);

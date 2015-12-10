@@ -110,19 +110,23 @@ Button* j1Gui::CreateButton(SDL_Texture* tex, SDL_Rect* rect, Label* label, bool
 	return button;
 }
 
-Window* j1Gui::CreateWindows(SDL_Texture* tex, SDL_Rect* rect, Label* label, Button* button, bool listener){
-	Window* window = new Window(tex, rect, label, button, windows, listener);
+Window* j1Gui::CreateWindows(SDL_Texture* tex, SDL_Rect* rect, Label* label, Button* button, InputBox* input, bool listener){
+	Window* window = new Window(tex, rect, label, button, input, windows, listener);
 	elements.add(window);
 	elements.add(button);
 	elements.add(button->GetLabel());
 	elements.add(label);
+	elements.add(input);
+	elements.add(input->GetLabel());
 	return window;
 }
 
-InputBox* j1Gui::CreateInputBox(SDL_Texture* tex, SDL_Rect* rect, Label* label, bool listener){
+InputBox* j1Gui::CreateInputBox(SDL_Texture* tex, SDL_Rect* rect, Label* label, bool listener, bool isWindow){
 	InputBox* inputBox = new InputBox(tex, rect, label, inputbox, listener);
-	elements.add(inputBox);
-	elements.add(label);
+	if (!isWindow){
+		elements.add(inputBox);
+		elements.add(label);
+	}
 	return inputBox;
 }
 
@@ -267,11 +271,12 @@ void Button::Interact(MouseEvents events){
 //-------------------------------------------------
 
 //Window
-Window::Window(SDL_Texture* texture, SDL_Rect* rect, Label* label, Button* button, ElementType type, bool listener){
+Window::Window(SDL_Texture* texture, SDL_Rect* rect, Label* label, Button* button, InputBox* input, ElementType type, bool listener){
 	this->texture = texture;
 	this->box = rect;
 	this->labels.add(label);
 	this->buttons.add(button);
+	this->inputBoxes.add(input);
 	this->type = type;
 	this->listener = listener;
 }
@@ -289,6 +294,9 @@ void Window::Drag(){
 		tmp->data->Drag();
 	}
 	for (p2List_item<Label*>* tmp = this->labels.start; tmp; tmp = tmp->next){
+		tmp->data->Drag();
+	}
+	for (p2List_item<InputBox*>* tmp = this->inputBoxes.start; tmp; tmp = tmp->next){
 		tmp->data->Drag();
 	}
 }
@@ -309,7 +317,18 @@ void InputBox::Draw(){
 	App->render->Blit(texture, box->x, box->y, false);
 }
 
-void InputBox::Drag(){}
+void InputBox::Drag(){
+	p2Point<int> mouseMotion;
+	App->input->GetMouseMotion(mouseMotion.x, mouseMotion.y);
+	box->x = box->x + mouseMotion.x;
+	box->y = box->y + mouseMotion.y;
+	input->box->x = box->x + (box->w / 2) - (input->box->w / 2);
+	input->box->y = box->y + 5;
+}
 
-void InputBox::Interact(MouseEvents events){}
+void InputBox::Interact(MouseEvents events){
+	if (events == MouseLeftClick){
+		input->GetString().Clear();
+	}
+}
 //-------------------------------------------------
